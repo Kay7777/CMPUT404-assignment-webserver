@@ -59,7 +59,7 @@ class MyWebServer(socketserver.BaseRequestHandler):
                         os.getcwd()+'/www/deep/index.html')
         elif self.path == "/base.css":
             cssContent = self.readFile(os.getcwd()+'/www/base.css')
-        elif self.path == "/deep/base.css":
+        elif self.path == "/deep/deep.css":
             cssContent = self.readFile(os.getcwd()+'/www/deep/deep.css')
 
         if self.method != "GET":
@@ -67,13 +67,13 @@ class MyWebServer(socketserver.BaseRequestHandler):
                 bytearray("HTTP/1.1 405 Method Not Allowed\r\n", 'utf-8'))
         elif htmlContent != None:
             self.request.sendall(bytearray(
-                "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\n"+htmlContent+"\r\n", 'utf-8'))
+                "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\n\r\n"+htmlContent+"\r\n", 'utf-8'))
         elif cssContent:
             self.request.sendall(bytearray(
-                "HTTP/1.1 200 OK\r\nContent-Type: text/css; charset=utf-8\r\n"+cssContent+"\r\n", 'utf-8'))
+                "HTTP/1.1 200 OK\r\nContent-Type: text/css; charset=utf-8\r\n\r\n"+cssContent+"\r\n", 'utf-8'))
         elif len(self.path.split("/")) == 3 and self.path.split("/")[1] != "deep" and (self.path.split("/")[2] == "index.html" or self.path.split("/") == ""):
             self.request.sendall(
-                bytearray("200 OK Not FOUND! Hardcoding? " + self.path + "\r\nContent-Type: text/html charset=utf-8\r\n", 'utf-8'))
+                bytearray("200 OK Not FOUND! Hardcoding? " + self.path + "\r\nContent-Type: text/html charset=utf-8\r\n\r\n", 'utf-8'))
         else:
             self.request.sendall(
                 bytearray("HTTP/1.1 404 Not Found\r\nConnection: close\r\n", 'utf-8'))
