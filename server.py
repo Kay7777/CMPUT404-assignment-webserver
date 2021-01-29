@@ -81,12 +81,12 @@ class MyWebServer(socketserver.BaseRequestHandler):
         return
 
     def getPath(self, data):
-        data = str(data, 'utf-8').split(' ')
-        return data[1]
+        d = str(data, 'utf-8').split(' ')
+        return d[1]
 
     def getMethod(self, data):
-        data = str(data, 'utf-8').split(' ')
-        return data[0]
+        d = str(data, 'utf-8').split(' ')
+        return d[0]
 
     def readFile(self, file):
         with open(file, 'r') as f:
